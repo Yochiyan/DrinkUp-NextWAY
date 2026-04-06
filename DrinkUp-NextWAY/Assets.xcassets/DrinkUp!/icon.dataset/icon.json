@@ -1,0 +1,92 @@
+{
+  "fill-specializations" : [
+    {
+      "value" : "system-light"
+    },
+    {
+      "appearance" : "dark",
+      "value" : "system-dark"
+    }
+  ],
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "hidden" : true,
+          "image-name" : "Frame 1 (2).png",
+          "name" : "Frame 1 (2)"
+        },
+        {
+          "hidden" : false,
+          "image-name" : "Frame 1 (1).png",
+          "name" : "Frame 1 (1)"
+        },
+        {
+          "hidden" : true,
+          "image-name" : "Frame 1.png",
+          "name" : "Frame 1",
+          "opacity" : 1
+        },
+        {
+          "blend-mode" : "normal",
+          "glass-specializations" : [
+            {
+              "value" : false
+            },
+            {
+              "appearance" : "dark",
+              "value" : false
+            }
+          ],
+          "hidden-specializations" : [
+            {
+              "value" : false
+            },
+            {
+              "idiom" : "iOS",
+              "value" : true
+            }
+          ],
+          "image-name" : "DrinkUp!_icon.png",
+          "name" : "DrinkUp!_icon"
+        },
+        {
+          "blend-mode" : "normal",
+          "fill" : "none",
+          "glass" : false,
+          "hidden-specializations" : [
+            {
+              "value" : false
+            },
+            {
+              "idiom" : "square",
+              "value" : true
+            }
+          ],
+          "image-name" : "DrinkUp!.png",
+          "name" : "DrinkUp!",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "squares" : [
+      "iOS"
+    ]
+  }
+}

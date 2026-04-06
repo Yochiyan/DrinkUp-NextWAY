@@ -1,32 +1,29 @@
 //
-//  DrinkUp_NextWAYApp.swift
-//  DrinkUp-NextWAY
+//  How_many_drink_water_App.swift
+//  How many drink water?
 //
-//  Created by よっちゃん on 2026/04/05.
+//  Created by よっちゃん on 2025/09/18.
 //
 
 import SwiftUI
-import SwiftData
+import CoreData
+import UIKit
 
 @main
-struct DrinkUp_NextWAYApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
-
+struct DrinkUpApp: App {
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(sharedModelContainer)
+    }
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication,
+                     supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return .portrait
     }
 }
