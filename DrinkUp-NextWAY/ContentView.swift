@@ -9,6 +9,7 @@ import SwiftUI
 import UIKit
 import Combine
 import Foundation
+import HealthKit
 struct ContentView: View {
     @StateObject private var settings = AppSettings()
     @State private var bottles: [Bottle] = []
@@ -22,6 +23,36 @@ struct ContentView: View {
     @State private var showAchievementSystemView: Bool = false
     @State private var showCustomAddSheet: Bool = false
     @State private var customAddInput: String = ""
+    let healthStore = HKHealthStore()
+
+    func requestHealthKitPermission() {
+        guard HKHealthStore.isHealthDataAvailable() else { return }
+        let waterType = HKQuantityType.quantityType(forIdentifier: .dietaryWater)!
+
+        healthStore.requestAuthorization(toShare: [waterType], read: []) { success, error in
+            if let error = error {
+                print("HealthKit auth error: \(error)")
+            }
+        }
+    }
+
+    func saveWaterToHealthKit(amount: Int) {
+        let waterType = HKQuantityType.quantityType(forIdentifier: .dietaryWater)!
+        let quantity = HKQuantity(unit: HKUnit.literUnit(with: .milli), doubleValue: Double(amount))
+
+        let sample = HKQuantitySample(
+            type: waterType,
+            quantity: quantity,
+            start: Date(),
+            end: Date()
+        )
+
+        healthStore.save(sample) { success, error in
+            if let error = error {
+                print("HealthKit save error: \(error)")
+            }
+        }
+    }
     // MARK: - Subviews to reduce type-checking complexity
     @ViewBuilder
     private func HeaderView(bottle: Bottle) -> some View {
@@ -141,6 +172,7 @@ struct ContentView: View {
             impact.impactOccurred()
             let newRecord = DrinkRecord(date: Date(), amount: bottle.size)
             records.append(newRecord)
+            saveWaterToHealthKit(amount: bottle.size)//ヘルスケアへの書き込み
         }) {
             Text("+\(bottle.size)ml")
                 .font(.system(size: 30, weight: .bold))
@@ -178,6 +210,7 @@ struct ContentView: View {
                     impact.impactOccurred()
                     let record = DrinkRecord(date: Date(), amount: value)
                     records.append(record)
+                    saveWaterToHealthKit(amount: value)
                 }
                 customAddInput = ""
 
@@ -204,14 +237,14 @@ struct ContentView: View {
     //WelcomeView
     private func WelcomeView() -> some View {
         VStack(spacing: 30) {
-            Text("こんにちは")
+            Text("こんにちは！")
                 .font(.title)
                 .font(.largeTitle)
                 .environment(\.locale, .current)
                 .fontWeight(.bold)
                 .foregroundColor(.white)
 
-            Text("開始するにはマイボトルが必要です。")
+            Text("マイボトルを用意しましたか？")
                 .font(.title2)
                 .environment(\.locale, .current)
                 .padding(16)
@@ -243,6 +276,15 @@ struct ContentView: View {
             if let size = Int(inputSize) {
                 let newBottle = Bottle(size: size)
                 bottles = [newBottle]
+                // ここでHealthKit認証を呼び出す
+                let manager = HealthKitManager.shared
+                if manager.isAvailable() {
+                    manager.requestAuthorization { success in
+                        if !success {
+                            print("HealthKit authorization failed")
+                        }
+                    }
+                }
             }
         }
         .padding()
@@ -332,6 +374,7 @@ struct ContentView: View {
         }
         .onAppear {
             loadData()
+            // Removed requestHealthKitPermission() call here as per instructions
         }
         .onChange(of: bottles) { _ in
             saveData()
