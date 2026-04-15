@@ -23,9 +23,10 @@ struct ContentView: View {
     @State private var showAchievementSystemView: Bool = false
     @State private var showCustomAddSheet: Bool = false
     @State private var customAddInput: String = ""
-    let healthStore = HKHealthStore()
+    @State private var showTutorial = false // チュートリアル表示フラグ
+   let healthStore = HKHealthStore()
 
-    func requestHealthKitPermission() {
+    func requestHealthKitPermission(){
         guard HKHealthStore.isHealthDataAvailable() else { return }
         let waterType = HKQuantityType.quantityType(forIdentifier: .dietaryWater)!
 
@@ -276,15 +277,6 @@ struct ContentView: View {
             if let size = Int(inputSize) {
                 let newBottle = Bottle(size: size)
                 bottles = [newBottle]
-                // ここでHealthKit認証を呼び出す
-                let manager = HealthKitManager.shared
-                if manager.isAvailable() {
-                    manager.requestAuthorization { success in
-                        if !success {
-                            print("HealthKit authorization failed")
-                        }
-                    }
-                }
             }
         }
         .padding()
@@ -301,6 +293,34 @@ struct ContentView: View {
                 .stroke(Color.white.opacity(0.35), lineWidth: 1)
         )
         .shadow(color: .black.opacity(0.2), radius: 10, y: 6)
+    }
+
+    // チュートリアル初回チェック
+    private func checkFirstTutorial() {
+        let key = "didShowTutorial"
+        if !UserDefaults.standard.bool(forKey: key) && !bottles.isEmpty {
+            showTutorial = true
+            UserDefaults.standard.set(true, forKey: key)
+        }
+    }
+    
+
+    private func resetAllState() {
+        bottles = []
+        records = []
+        inputSize = ""
+        today = Date()
+        now = Date()
+        showSettings = false
+        showSavingInfo = false
+        showHistory = false
+        showAchievementSystemView = false
+        showCustomAddSheet = false
+        customAddInput = ""
+        showTutorial = false
+
+        settings.waterPrice = 0
+        settings.vendingSize = 0
     }
 
     var body: some View {
@@ -354,10 +374,6 @@ struct ContentView: View {
                 .buttonStyle(.plain)
 
                 AddButton(bottle: bottle)
-                Text("Tap to add • Long press for custom entry")
-                    .font(.caption)
-                    .foregroundColor(.gray)
-                    .multilineTextAlignment(.center)
 
                 RecordsList()
             } else {
@@ -365,6 +381,12 @@ struct ContentView: View {
             }
         }
         .padding()
+        .fullScreenCover(isPresented: $showTutorial) {
+            TutorialView {
+                requestHealthKitPermission()
+                showTutorial = false
+            }
+        }
         //Update
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             today = Date()
@@ -372,9 +394,17 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
             today = Date()
         }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("startTutorial"))) { _ in
+            showTutorial = true
+        }
         .onAppear {
             loadData()
-            // Removed requestHealthKitPermission() call here as per instructions
+            
+        }
+        .onChange(of: bottles) { newValue in
+            if !newValue.isEmpty {
+                checkFirstTutorial()
+            }
         }
         .onChange(of: bottles) { _ in
             saveData()
@@ -383,8 +413,7 @@ struct ContentView: View {
             saveData()
         }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("didResetAllData"))) { _ in
-            records = []
-            bottles = []
+            resetAllState()
         }
         .onReceive(Timer.publish(every: 60, on: .main, in: .common).autoconnect()) { value in
             now = value

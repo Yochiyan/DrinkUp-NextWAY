@@ -86,6 +86,16 @@ struct SettingsView: View {
                 .listRowBackground(Color.clear)
             }
             Section {
+                Button("Start Tutorial") {
+                    NotificationCenter.default.post(name: Notification.Name("startTutorial"), object: nil)
+                    dismiss()
+                }
+                .listRowBackground(Color(red: 186/255, green: 217/255, blue: 255/255))
+                .foregroundColor(.blue)
+                .bold()
+                .frame(maxWidth: .infinity, alignment: .center)
+            }
+            Section {
                 Button(role: .destructive) {
                     showResetAlert = true
                 } label: {
@@ -106,6 +116,7 @@ struct SettingsView: View {
                     Button("Cancel", role: .cancel) {}
                     Button("Continue", role: .destructive) {
                         resetAllData()
+                        UserDefaults.standard.removeObject(forKey: "didShowTutorial")
                     }
                 }
             }
