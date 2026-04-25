@@ -11,6 +11,7 @@ import Combine
 import Foundation
 import HealthKit
 struct ContentView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var settings = AppSettings()
     @State private var bottles: [Bottle] = []
     @State private var records: [DrinkRecord] = []
@@ -233,12 +234,12 @@ struct ContentView: View {
             }
         }
     }
-    
+/*-----------------------------------------------------------------------------*/
     @ViewBuilder
     //WelcomeView
     private func WelcomeView() -> some View {
         VStack(spacing: 30) {
-            Text("こんにちは！")
+            Text(colorScheme == .dark ? "こんばんは！" : "こんにちは！")
                 .font(.title)
                 .font(.largeTitle)
                 .environment(\.locale, .current)
@@ -251,19 +252,25 @@ struct ContentView: View {
                 .padding(16)
                 .background(Color.white.opacity(0.5))
                 .cornerRadius(10)
-                .foregroundColor(.gray)
+                .foregroundStyle(colorScheme == .dark ? Color.white : Color.gray)
         }
         .padding(80)
         .background(
             LinearGradient(
-                gradient: Gradient(colors: [Color.blue, Color.white]),
-                startPoint: .top, endPoint: .bottom
+                gradient: Gradient(colors:
+                    colorScheme == .dark
+                    ? [Color(red: 0.6, green: 0.3, blue: 0.3),
+                    Color(red: 0.1, green: 0.0, blue: 0.2)]
+                    : [Color.blue, Color.white]
+                ),
+                startPoint: .top,
+                endPoint: .bottom
             )
             .cornerRadius(40)
             .padding(16)
             .shadow(radius: 10)
         )
-
+//.shadow(color: .black.opacity(0.2), radius: 10, y: 6)
         Text("マイボトルの容量を入力してください(ml)")
             .environment(\.locale, .current)
             .bold()
