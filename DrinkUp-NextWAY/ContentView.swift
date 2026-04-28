@@ -25,6 +25,8 @@ struct ContentView: View {
     @State private var showCustomAddSheet: Bool = false
     @State private var customAddInput: String = ""
     @State private var showTutorial = false // チュートリアル表示フラグ
+    @State private var lastDeletedRecord: DrinkRecord? = nil//振って取り消し
+    @State private var showUndoToast: Bool = false
    let healthStore = HKHealthStore()
 
     func requestHealthKitPermission(){
@@ -58,7 +60,7 @@ struct ContentView: View {
     // MARK: - Subviews to reduce type-checking complexity
     @ViewBuilder
     private func HeaderView(bottle: Bottle) -> some View {
-        Text("Bottle Size: \(bottle.size)ml")
+        Text("マイボトル: \(bottle.size)ml")
             .environment(\.locale, .current)
             .font(.title)
             .fontWeight(.bold)
@@ -123,7 +125,7 @@ struct ContentView: View {
     private func SavingsView(total: Int) -> some View {
         let saving = settings.vendingSize > 0 ? total * settings.waterPrice / settings.vendingSize : 0
         HStack(spacing: 8) {
-            Text("Saved money: ¥\(saving)")
+            Text("節約額: ¥\(saving)")
                 .bold()
                 .environment(\.locale, .current)
             Button { showSavingInfo = true } label: {
@@ -133,7 +135,7 @@ struct ContentView: View {
             .buttonStyle(.plain)
             .foregroundStyle(.blue)
         }
-        .alert("Saved moneyについて", isPresented: $showSavingInfo) {
+        .alert("節約額について", isPresented: $showSavingInfo) {
             Button("OK", role: .cancel) {}
         } message: {
             Text("水を買う代わりに水筒を満杯にすることでどれだけ節約できたかが表示されます。\nこの機能を使用するには、設定で価格と容量を登録してください。")
@@ -174,6 +176,7 @@ struct ContentView: View {
             impact.impactOccurred()
             let newRecord = DrinkRecord(date: Date(), amount: bottle.size)
             records.append(newRecord)
+            lastDeletedRecord = nil
             saveWaterToHealthKit(amount: bottle.size)//ヘルスケアへの書き込み
         }) {
             Text("+\(bottle.size)ml")
@@ -200,13 +203,13 @@ struct ContentView: View {
                     showCustomAddSheet = true
                 }
         )
-        .alert("今どのくらい飲んだのか分かるんですか！?", isPresented: $showCustomAddSheet) {
+        .alert("マイボトル以外の水分補給", isPresented: $showCustomAddSheet) {
             TextField("\(bottle.size)ml", text: $customAddInput)
                 .keyboardType(.numberPad)
-            Button("Cancel", role: .cancel) {
+            Button("キャンセル", role: .cancel) {
                 customAddInput = ""
             }
-            Button("Add") {
+            Button("追加") {
                 if let value = Int(customAddInput), value > 0 {
                     let impact = UIImpactFeedbackGenerator(style: .medium)
                     impact.impactOccurred()
@@ -218,7 +221,7 @@ struct ContentView: View {
 
             }
         } message: {
-            Text("答えられるもんなら答えてみな。")
+            Text("もしかして：超能力者ですか？")
         }
     }
 
@@ -331,63 +334,97 @@ struct ContentView: View {
     }
 
     var body: some View {
-        VStack(spacing: 40) {
-            
-            if let bottle = bottles.first {
-                HeaderView(bottle: bottle)
-
-                ActionButtons()
-                    .fullScreenCover(isPresented: $showSettings) {
-                        if let index = bottles.indices.first {
-                            SettingsView(bottle: $bottles[index])
-                                .environmentObject(settings)
-                        }
-                    }
-                    .sheet(isPresented: $showHistory) {
-                        HistoryView(records: records)
-                    }
-                //Information
-                Text("Today's Total: \(todayTotal())ml")
-                    .font(.headline)
-
-                let total = records.reduce(0) { $0 + $1.amount }
-                Text("Lifetime Total: \(total)ml")
-                    .font(.headline)
-                    .environment(\.locale, .current)
-
-                SavingsView(total: total)
-
-                let totalToday = todayTotal()
-                IndicatorView(totalToday: totalToday)
-                    .sheet(isPresented: $showAchievementSystemView) {
-                        AchievementSystemView()
-                    }
+        ZStack(alignment: .bottom) {
+            VStack(spacing: 40) {
                 
-                Button {
-                    showAchievementSystemView = true
-                } label: {
-                    HStack(spacing: 8) {
-                        Image(systemName: "info.bubble")
-                        Text("Achievement System")
+                if let bottle = bottles.first {
+                    HeaderView(bottle: bottle)
+
+                    ActionButtons()
+                        .fullScreenCover(isPresented: $showSettings) {
+                            if let index = bottles.indices.first {
+                                SettingsView(bottle: $bottles[index])
+                                    .environmentObject(settings)
+                            }
+                        }
+                        .sheet(isPresented: $showHistory) {
+                            HistoryView(records: records)
+                        }
+                    //Information
+                    Text("今日飲んだ量: \(todayTotal())ml")
+                        .font(.headline)
+
+                    let total = records.reduce(0) { $0 + $1.amount }
+                    Text("今まで飲んだ量: \(total)ml")
+                        .font(.headline)
+                        .environment(\.locale, .current)
+
+                    SavingsView(total: total)
+
+                    let totalToday = todayTotal()
+                    IndicatorView(totalToday: totalToday)
+                        .sheet(isPresented: $showAchievementSystemView) {
+                            AchievementSystemView()
+                        }
+                    
+                    Button {
+                        showAchievementSystemView = true
+                    } label: {
+                        HStack(spacing: 8) {
+                            Image(systemName: "info.bubble")
+                            Text("Achievement System")
+                        }
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(.blue)
+                        .padding(.vertical, 6)
+                        .padding(.horizontal, 10)
+                        .background(.ultraThinMaterial)
+                        .clipShape(Capsule())
+                        //Achievement System explain
                     }
-                    .font(.footnote.weight(.semibold))
-                    .foregroundStyle(.blue)
-                    .padding(.vertical, 6)
-                    .padding(.horizontal, 10)
-                    .background(.ultraThinMaterial)
-                    .clipShape(Capsule())
-                    //Achievement System explain
+                    .buttonStyle(.plain)
+
+                    AddButton(bottle: bottle)
+
+                    RecordsList()
+                } else {
+                    WelcomeView()
                 }
-                .buttonStyle(.plain)
-
-                AddButton(bottle: bottle)
-
-                RecordsList()
-            } else {
-                WelcomeView()
+            }
+            // Undo Toast UI overlay
+            if showUndoToast, let last = lastDeletedRecord {
+                HStack {
+                    Text("直近の記録が取り消されました！")
+                        .bold()
+                    Spacer()
+                    Button("元に戻す") {
+                        records.append(last)
+                        lastDeletedRecord = nil
+                        showUndoToast = false
+                    }
+                    .bold()
+                    .foregroundColor(.yellow)
+                }
+                .padding()
+                .background(.ultraThinMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .padding()
+                .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
         .padding()
+        .onReceive(NotificationCenter.default.publisher(for: UIDevice.deviceDidShakeNotification)) { _ in
+            if let last = records.last {
+                lastDeletedRecord = last
+                records.removeLast()
+                showUndoToast = true
+
+                // 自動で数秒後に消す
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    showUndoToast = false
+                }
+            }
+        }
         .fullScreenCover(isPresented: $showTutorial) {
             TutorialView {
                 requestHealthKitPermission()
@@ -472,5 +509,18 @@ struct ContentView: View {
 }
 #Preview {
     ContentView()
+}
+
+
+extension UIDevice {
+    static let deviceDidShakeNotification = Notification.Name("deviceDidShakeNotification")
+}
+
+extension UIWindow {
+    open override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            NotificationCenter.default.post(name: UIDevice.deviceDidShakeNotification, object: nil)
+        }
+    }
 }
 

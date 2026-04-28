@@ -4,15 +4,7 @@
 //
 //  Created by よっちゃん on 2026/02/18.
 //
-
 import Foundation
-
-//
-//  AchievementSystemView.swift
-//  DrinkUp
-//
-//  Created by よっちゃん on 2026/02/18.
-//
 
 import SwiftUI
 
@@ -31,7 +23,7 @@ struct AchievementSystemView: View {
                     
                     Divider()
                     
-                    Text("DrinkUp! uses a simple visual growth system to represent your daily hydration progress.")
+                    Text("毎日の水分摂取量状況を直感的に分かりやすく伝えます。")
                         .bold()
                     
                     VStack(alignment: .leading, spacing: 16) {
@@ -64,7 +56,7 @@ struct AchievementSystemView: View {
                         }
                         
                         Label {
-                            Text("1200 ml or more\n")
+                            Text("1200 mlからそれ以上\n")
                                 .bold()
                         } icon: {
                             Image(systemName: "trophy.fill")
@@ -75,13 +67,13 @@ struct AchievementSystemView: View {
                     
                     Divider()
                     
-                    Text("This system transforms numbers into visual feedback, encouraging habit formation through growth and achievement.")
+                    Text("このシステムは、数字を視覚的なフィードバックに変換し成長と達成を通して習慣形成を促します。")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                     
                     
                     
-                    Text("ATTENTION!\nAccording to Japan's Ministry of Health, Labour and Welfare, the minimum daily water intake for adults is 1.2 liters. Actual requirements vary depending on gender and body size. Therefore, do not rely too heavily on this guideline.\n")
+                    Text("注意！\n厚生労働省によると、成人の1日の最低水分摂取量は1.2Lです。実際の必要量は性別や体格によって異なります。この目安を過度に頼らないでください。\n")
                         .foregroundStyle(.secondary)
                 }
                 .padding()

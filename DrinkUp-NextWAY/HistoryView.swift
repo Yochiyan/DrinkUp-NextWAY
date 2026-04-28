@@ -34,7 +34,7 @@ struct HistoryView: View {
                     .padding(.vertical, 6)
                 }
             }
-            .navigationTitle("History")
+            .navigationTitle("履歴")
             .overlay(alignment: .bottomLeading) {
                 Button(action: { dismiss() }) {
                     Image(systemName:"chevron.down")

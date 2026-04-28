@@ -23,13 +23,13 @@ struct SettingsView: View {
     
     var body: some View {
         Form {
-            Text("Check or change your order.")
-                .font(.title)
+            Text("設定")
+                .font(.largeTitle)
                 .bold()
                 .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
                 .listRowBackground(Color.clear)
             
-            Section("Bottle Capacity (ml)") {
+            Section("ボトル内容量(ml)") {
                 TextField("(ml)", text: $inputSize)
                     .keyboardType(.numberPad)
                     .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
@@ -37,7 +37,7 @@ struct SettingsView: View {
             .foregroundColor(.secondary)
             .bold()
             .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
-            Section("Price of a Plastic Bottle of Water (¥)") {
+            Section("水のペットボトルの値段(¥)") {
                 TextField("",value: $settings.waterPrice, format: .number)
                     .keyboardType(.numberPad)
                     .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
@@ -45,14 +45,14 @@ struct SettingsView: View {
                     
             } .foregroundColor(.secondary)
             
-            Section("Plastic Bottle Capacity (ml)") {
+            Section("水のペットボトルの容量(ml)") {
                 TextField("", value: $settings.vendingSize, format: .number) .keyboardType(.numberPad)
                     .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
                     .bold()
             } .foregroundColor(.secondary)
 
             Section {
-                Button("Save and close") {
+                Button("保存して閉じる") {
                     guard let size = Int(inputSize), size > 0 else {
                         showInputError = true
                         return
@@ -71,7 +71,7 @@ struct SettingsView: View {
                 Button {
                     showAboutSheet = true
                 } label: {
-                    Text("About DrinkUp!")
+                    Text("DrinkUp!について")
                         .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
                         .bold()
                         .frame(maxWidth: .infinity)
@@ -86,7 +86,7 @@ struct SettingsView: View {
                 .listRowBackground(Color.clear)
             }
             Section {
-                Button("Start Tutorial") {
+                Button("チュートリアルを開始") {
                     NotificationCenter.default.post(name: Notification.Name("startTutorial"), object: nil)
                     dismiss()
                 }
@@ -99,7 +99,7 @@ struct SettingsView: View {
                 Button(role: .destructive) {
                     showResetAlert = true
                 } label: {
-                    Text("Reset all data")
+                    Text("DrinkUp!をリセット")
                         .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
                         .bold()
                         .frame(maxWidth: .infinity)

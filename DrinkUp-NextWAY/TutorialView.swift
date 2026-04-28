@@ -46,7 +46,7 @@ struct TutorialView: View {
                 
                 else if step == 1 {
                     VStack(spacing: 16) {
-                        Text("使い方")
+                        Text("飲んだら青いボタンを押す")
                             .font(.title)
                             .foregroundColor(Color.black)
                             .bold()
@@ -62,6 +62,26 @@ struct TutorialView: View {
                             .foregroundColor(.gray)
                             .bold()
                     }//+300
+                }
+                
+                else if step == 2 {
+                    VStack(spacing: 16) {
+                        Text("間違えたらiPhoneを振る")
+                            .font(.title)
+                            .foregroundColor(Color.black)
+                            .bold()
+                        Image("Undo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 300)
+                            .cornerRadius(40)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                        
+                        Text("最後にした記録が取り消されます。\niPhoneを投げないように気をつけてください★")
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.gray)
+                            .bold()
+                    }
                 }
                 
                 else {
@@ -95,7 +115,7 @@ struct TutorialView: View {
                 Spacer()
                 
                 Button(action: {
-                    if step < 2 {
+                    if step < 3 {
                         step += 1
                     } else {
                         onFinish()

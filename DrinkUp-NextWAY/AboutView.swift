@@ -16,8 +16,8 @@ struct AboutView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     
-                    Text("About DrinkUp!")
-                        .font(.largeTitle)
+                    Text("DrinkUp!")
+                        .font(.title)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .center)
                         .multilineTextAlignment(.center)
@@ -31,30 +31,40 @@ struct AboutView: View {
                         .shadow(radius: 10)
                         .frame(maxWidth: .infinity, alignment: .center)
                     
+                    // App Version
+                    let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+                    let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
+
+                    Text("Version \(version) (\(build))")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    
                     Divider()
                     
                     Group {
                         Text("Why I made this app")
                             .font(.headline)
                         
-                        Text("I named it \"DrinkUp!\" with the hope that you'll open it right as you finish the last drop.\nDrinkUp! is designed to help you track the water you drink from your water bottle with just a few taps, helping you develop healthy hydration habits. \nIt's a simple and effective way to stay hydrated and make small, positive changes in your daily routine.")
+                        Text("「最後の一滴を飲み干した瞬間に開いてほしい」という想いから、DrinkUp!と名付けました。\nこのアプリは、ボトルの水分摂取量を数タップで簡単に記録できます。\n日々の中で無理なく水分補給の習慣を身につけるためのシンプルなツールです。")
                     }
                     
                     Group {
                         Text("About the Developer")
                             .font(.headline)
                         
-                        Text("Created by Yoshihisa Kashima\n")
+                        Text("Yoshihisa Kashima")
+                        Link("マシュマロ", destination: URL(string: "https://marshmallow-qa.com/1mtb1vn4livqyh7")!)
                     }
                     Group {
-                        Text("ATTENTION!")
+                        Text("注意！")
                             .font(.headline)
-                        Text("Actual water requirements vary by gender and body type, so please do not rely excessively on this app's achievement system.\n\n\n")
+                        Text("必要量な水分は性別や体型によって異なります。\nAchievement Systemを過度に依存しないでください。\n\n\n")
                     }
                 }
                 .padding()
             }
-            .navigationTitle("About DrinkUp!")
+            .navigationTitle("DrinkUp!について")
             .navigationBarTitleDisplayMode(.inline)
             .overlay(alignment: .bottomLeading) {
                 Button(action: { dismiss() }) {
