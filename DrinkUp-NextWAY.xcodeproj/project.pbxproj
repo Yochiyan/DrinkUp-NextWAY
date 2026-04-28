@@ -100,11 +100,11 @@
 				};
 			};
 			buildConfigurationList = 59B84B962F822A2600CC5BA0 /* Build configuration list for PBXProject "DrinkUp-NextWAY" */;
-			developmentRegion = en;
+			developmentRegion = ja;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
+				ja,
 			);
 			mainGroup = 59B84B922F822A2600CC5BA0;
 			minimizedProjectReferenceProxies = 1;
@@ -273,6 +273,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "DrinkUp-NextWAY/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "DrinkUp!";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "DrinkUp!は水分摂取量を管理するために、ヘルスケアのデータを読み取ります。";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "DrinkUp!は水分補給量を記録するために、ヘルスケアのデータにアクセスします。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -311,6 +312,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "DrinkUp-NextWAY/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "DrinkUp!";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "DrinkUp!は水分摂取量を管理するために、ヘルスケアのデータを読み取ります。";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "DrinkUp!は水分補給量を記録するために、ヘルスケアのデータにアクセスします。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
