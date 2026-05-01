@@ -282,6 +282,20 @@ struct ContentView: View {
             .keyboardType(.numberPad)
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .frame(width: 200)
+            .toolbar {
+
+                    ToolbarItemGroup(placement: .keyboard) {
+
+                        Spacer()
+
+                        Button {
+                            hideKeyboard()
+                        } label: {
+                            Image(systemName: "chevron.down")
+                        }
+                    }
+                }
+        
 
         Button("Start!") {
             if let size = Int(inputSize) {
@@ -443,7 +457,7 @@ struct ContentView: View {
         }
         .onAppear {
             loadData()
-            
+            requestHealthKitPermission()
         }
         .onChange(of: bottles) { newValue in
             if !newValue.isEmpty {
@@ -521,6 +535,20 @@ extension UIWindow {
         if motion == .motionShake {
             NotificationCenter.default.post(name: UIDevice.deviceDidShakeNotification, object: nil)
         }
+    }
+}
+
+// MARK: - Keyboard Dismiss Helpers
+func dismissKeyboard() {
+    #if canImport(UIKit)
+    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    #endif
+}
+
+extension View {
+    /// Dismisses the keyboard by resigning first responder.
+    func hideKeyboard() {
+        dismissKeyboard()
     }
 }
 

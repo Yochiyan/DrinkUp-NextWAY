@@ -21,7 +21,7 @@ struct HistoryView: View {
                             Text(item.date.formatted(date: .complete, time: .omitted))
                                 .font(.headline)
 
-                            Text("Total: \((item.total)) ml")
+                            Text("合計: \((item.total)) ml")
                                 .font(.title3)
                                 .bold()
                         }

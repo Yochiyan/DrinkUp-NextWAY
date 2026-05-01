@@ -105,7 +105,7 @@ struct TutorialView: View {
                                 .frame(maxWidth: .infinity, alignment: .center)
                         }
                         
-                        Text("記録をヘルスケアに保存できます。\n選択は任意です。")
+                        Text("許可された場合のみ\nヘルスケアに水分データを書き込みます。\nデータはデバイス内で管理され、\n開発者が取得することはありません。\n許可しない場合でもアプリは通常通り利用できます。")
                             .multilineTextAlignment(.center)
                             .foregroundColor(.gray)
                             .bold()
@@ -121,7 +121,7 @@ struct TutorialView: View {
                         onFinish()
                     }
                 }) {
-                    Text(step < 2 ? "次へ" : "はじめる")
+                    Text(step < 3 ? "次へ" : "続ける")
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()
