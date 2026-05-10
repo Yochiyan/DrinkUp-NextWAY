@@ -55,6 +55,7 @@ struct AboutView: View {
                         
                         Text("Yoshihisa Kashima")
                         Link("マシュマロ", destination: URL(string: "https://marshmallow-qa.com/1mtb1vn4livqyh7")!)
+                        Link("プライバシーポリシー", destination: URL(string: "https://cubic-bird-aa4.notion.site/DrinkUp-3527ee35cf148064968bc5e367f3eaf7")!)
                     }
                     Group {
                         Text("注意！")

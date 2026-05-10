@@ -27,11 +27,12 @@ struct ContentView: View {
     @State private var showTutorial = false // チュートリアル表示フラグ
     @State private var lastDeletedRecord: DrinkRecord? = nil//振って取り消し
     @State private var showUndoToast: Bool = false
-   let healthStore = HKHealthStore()
-
+    @State private var isAdding: Bool = false
+    let healthStore = HKHealthStore()
+    
     func requestHealthKitPermission(){
         guard HKHealthStore.isHealthDataAvailable() else { return }
-        let waterType = HKQuantityType.quantityType(forIdentifier: .dietaryWater)!
+        guard let waterType = HKQuantityType.quantityType(forIdentifier: .dietaryWater) else { return }
 
         healthStore.requestAuthorization(toShare: [waterType], read: []) { success, error in
             if let error = error {
@@ -39,9 +40,9 @@ struct ContentView: View {
             }
         }
     }
-
+    
     func saveWaterToHealthKit(amount: Int) {
-        let waterType = HKQuantityType.quantityType(forIdentifier: .dietaryWater)!
+        guard let waterType = HKQuantityType.quantityType(forIdentifier: .dietaryWater) else { return }
         let quantity = HKQuantity(unit: HKUnit.literUnit(with: .milli), doubleValue: Double(amount))
 
         let sample = HKQuantitySample(
@@ -60,12 +61,12 @@ struct ContentView: View {
     // MARK: - Subviews to reduce type-checking complexity
     @ViewBuilder
     private func HeaderView(bottle: Bottle) -> some View {
-        Text("マイボトル: \(bottle.size)ml")
+        Text("今日: \(todayTotal())ml")
             .environment(\.locale, .current)
-            .font(.title)
+            .font(.largeTitle)
             .fontWeight(.bold)
     }
-
+    
     @ViewBuilder
     private func ActionButtons() -> some View {
         HStack(spacing: 20) {
@@ -93,7 +94,7 @@ struct ContentView: View {
                     .stroke(Color.white.opacity(0.35), lineWidth: 1)
             )
             .shadow(color: .black.opacity(0.2), radius: 10, y: 6)
-
+            
             Button {
                 showHistory = true
             } label: {
@@ -119,29 +120,17 @@ struct ContentView: View {
         }
         .frame(maxWidth: .infinity)
     }
-
+    
     @ViewBuilder
-    //Money Saved
+    //StreakDays
     private func SavingsView(total: Int) -> some View {
-        let saving = settings.vendingSize > 0 ? total * settings.waterPrice / settings.vendingSize : 0
         HStack(spacing: 8) {
-            Text("節約額: ¥\(saving)")
+            Text("連続日数: \(streakDays())日")
                 .bold()
                 .environment(\.locale, .current)
-            Button { showSavingInfo = true } label: {
-                Image(systemName: "info.bubble").imageScale(.medium)
-                    .bold()
-            }
-            .buttonStyle(.plain)
-            .foregroundStyle(.blue)
-        }
-        .alert("節約額について", isPresented: $showSavingInfo) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text("水を買う代わりに水筒を満杯にすることでどれだけ節約できたかが表示されます。\nこの機能を使用するには、設定で価格と容量を登録してください。")
         }
     }
-
+    
     @ViewBuilder
     //Achivement System
     private func IndicatorView(totalToday: Int) -> some View {
@@ -149,15 +138,15 @@ struct ContentView: View {
             Image(systemName: "leaf")
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor((0...499).contains(totalToday) ? .red : .gray)
-
+            
             Image(systemName: "leaf.fill")
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor((500...799).contains(totalToday) ? .yellow : .gray)
-
+            
             Image(systemName: "tree.fill")
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor((800...1199).contains(totalToday) ? .green : .gray)
-
+            
             Image(systemName: "trophy.fill")
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(totalToday >= 1200 ? Color(red: 1.0, green: 0.84, blue: 0.0) : .gray)
@@ -166,11 +155,13 @@ struct ContentView: View {
         .multilineTextAlignment(.center)
         .environment(\.locale, .current)
     }
-
+    
     @ViewBuilder
     //+ml Button
     private func AddButton(bottle: Bottle) -> some View {
         Button(action: {
+            if isAdding { return }
+            isAdding = true
 
             let impact = UIImpactFeedbackGenerator(style: .medium)
             impact.impactOccurred()
@@ -178,6 +169,11 @@ struct ContentView: View {
             records.append(newRecord)
             lastDeletedRecord = nil
             saveWaterToHealthKit(amount: bottle.size)//ヘルスケアへの書き込み
+
+            // 短いクールダウンで連打を防止
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                isAdding = false
+            }
         }) {
             Text("+\(bottle.size)ml")
                 .font(.system(size: 30, weight: .bold))
@@ -196,6 +192,7 @@ struct ContentView: View {
                 .stroke(Color.white.opacity(0.35), lineWidth: 1)
         )
         .shadow(color: .black.opacity(0.2), radius: 10, y: 6)
+        .disabled(isAdding)
         .highPriorityGesture(
             LongPressGesture(minimumDuration: 0.5)
                 .onEnded { _ in
@@ -210,21 +207,26 @@ struct ContentView: View {
                 customAddInput = ""
             }
             Button("追加") {
+                if isAdding { return }
                 if let value = Int(customAddInput), value > 0 {
+                    isAdding = true
                     let impact = UIImpactFeedbackGenerator(style: .medium)
                     impact.impactOccurred()
                     let record = DrinkRecord(date: Date(), amount: value)
                     records.append(record)
                     saveWaterToHealthKit(amount: value)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                        isAdding = false
+                    }
                 }
                 customAddInput = ""
-
+                
             }
         } message: {
             Text("もしかして：超能力者ですか？")
         }
     }
-
+    
     @ViewBuilder
     private func RecordsList() -> some View {
         List(records.indices.reversed(), id: \.self) { index in
@@ -237,7 +239,7 @@ struct ContentView: View {
             }
         }
     }
-/*-----------------------------------------------------------------------------*/
+    /*-----------------------------------------------------------------------------*/
     @ViewBuilder
     //WelcomeView
     private func WelcomeView() -> some View {
@@ -248,8 +250,8 @@ struct ContentView: View {
                 .environment(\.locale, .current)
                 .fontWeight(.bold)
                 .foregroundColor(.white)
-
-            Text("マイボトルを用意しましたか？")
+            
+            Text("簡単に水分補給の記録ができます。")
                 .font(.title2)
                 .environment(\.locale, .current)
                 .padding(16)
@@ -261,11 +263,11 @@ struct ContentView: View {
         .background(
             LinearGradient(
                 gradient: Gradient(colors:
-                    colorScheme == .dark
-                    ? [Color(red: 0.6, green: 0.3, blue: 0.3),
-                    Color(red: 0.1, green: 0.0, blue: 0.2)]
-                    : [Color.blue, Color.white]
-                ),
+                                    colorScheme == .dark
+                                   ? [Color(red: 0.6, green: 0.3, blue: 0.3),
+                                      Color(red: 0.1, green: 0.0, blue: 0.2)]
+                                   : [Color.blue, Color.white]
+                                  ),
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -273,30 +275,30 @@ struct ContentView: View {
             .padding(16)
             .shadow(radius: 10)
         )
-//.shadow(color: .black.opacity(0.2), radius: 10, y: 6)
+        
         Text("マイボトルの容量を入力してください(ml)")
             .environment(\.locale, .current)
             .bold()
-
+        
         TextField("Type here!", text: $inputSize)
             .keyboardType(.numberPad)
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .frame(width: 200)
             .toolbar {
-
-                    ToolbarItemGroup(placement: .keyboard) {
-
-                        Spacer()
-
-                        Button {
-                            hideKeyboard()
-                        } label: {
-                            Image(systemName: "chevron.down")
-                        }
+                
+                ToolbarItemGroup(placement: .keyboard) {
+                    
+                    Spacer()
+                    
+                    Button {
+                        hideKeyboard()
+                    } label: {
+                        Image(systemName: "chevron.down")
                     }
                 }
+            }
         
-
+        
         Button("Start!") {
             if let size = Int(inputSize) {
                 let newBottle = Bottle(size: size)
@@ -317,8 +319,14 @@ struct ContentView: View {
                 .stroke(Color.white.opacity(0.35), lineWidth: 1)
         )
         .shadow(color: .black.opacity(0.2), radius: 10, y: 6)
+        
+        // プライバシーポリシー同意文＆リンク
+        Text("Start!を押すと[プライバシーポリシー](https://cubic-bird-aa4.notion.site/DrinkUp-3527ee35cf148064968bc5e367f3eaf7)に同意したものとします。")
+            .font(.footnote)
+            .foregroundColor(.gray)
+            .multilineTextAlignment(.center)
+            .padding(.top, 8)
     }
-
     // チュートリアル初回チェック
     private func checkFirstTutorial() {
         let key = "didShowTutorial"
@@ -365,11 +373,11 @@ struct ContentView: View {
                             HistoryView(records: records)
                         }
                     //Information
-                    Text("今日飲んだ量: \(todayTotal())ml")
+                    Text("今週: \(weekTotal())ml")
                         .font(.headline)
 
                     let total = records.reduce(0) { $0 + $1.amount }
-                    Text("今まで飲んだ量: \(total)ml")
+                    Text("今まで: \(total)ml")
                         .font(.headline)
                         .environment(\.locale, .current)
 
@@ -457,7 +465,6 @@ struct ContentView: View {
         }
         .onAppear {
             loadData()
-            requestHealthKitPermission()
         }
         .onChange(of: bottles) { newValue in
             if !newValue.isEmpty {
@@ -487,6 +494,46 @@ struct ContentView: View {
         return records
             .filter { $0.date >= start && $0.date < end }
             .reduce(0) { $0 + $1.amount }
+    }
+    
+    // WeekTotal()
+    private func weekTotal() -> Int {
+        let cal = Calendar.current
+            guard let weekInterval = cal.dateInterval(of: .weekOfYear, for: today) else {
+                return 0
+            }
+            return records
+                .filter {
+                    $0.date >= weekInterval.start &&
+                    $0.date < weekInterval.end
+                }
+                .reduce(0) { $0 + $1.amount }
+        }
+    
+    //StreakDays()
+    private func streakDays() -> Int {
+        let cal = Calendar.current
+        let uniqueDays = Set(records.map {cal.startOfDay(for: $0.date)})
+        
+        var streak: Int = 0
+            var currentDay = cal.startOfDay(for: today)
+            // 今日記録が無ければ昨日から開始
+            if !uniqueDays.contains(currentDay) {
+                guard let yesterday = cal.date(byAdding: .day, value: -1, to: currentDay) else {
+                    return 0
+                }
+                currentDay = yesterday
+            }
+            while uniqueDays.contains(currentDay) {
+
+                streak += 1
+
+                guard let previousDay = cal.date(byAdding: .day, value: -1, to: currentDay) else {
+                    break
+                }
+                currentDay = previousDay
+            }
+            return streak
     }
     
     private func todayCount() -> Int {

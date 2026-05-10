@@ -77,18 +77,6 @@ struct SettingsView: View {
             .foregroundColor(.secondary)
             .bold()
             .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
-            Section("水のペットボトルの値段(¥)") {
-                TextField("",value: $settings.waterPrice, format: .number)
-                    .keyboardType(.numberPad)
-                    .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
-                    .bold()
-            } .foregroundColor(.secondary)
-            
-            Section("水のペットボトルの容量(ml)") {
-                TextField("", value: $settings.vendingSize, format: .number) .keyboardType(.numberPad)
-                    .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
-                    .bold()
-            } .foregroundColor(.secondary)
 
 
             Section {
@@ -168,7 +156,7 @@ struct SettingsView: View {
                 .buttonStyle(.plain)
                 .listRowInsets(EdgeInsets())
                 .listRowBackground(Color.clear)
-                .alert("本当にリセットを行いますか？\nこの操作は元に戻せません。", isPresented: $showResetAlert) {
+                .alert("本当にリセットしますか？\nこの操作は元に戻せません。", isPresented: $showResetAlert) {
                     Button("キャンセル", role: .cancel) {}
                     Button("続ける", role: .destructive) {
                         resetAllData()
@@ -179,7 +167,8 @@ struct SettingsView: View {
             }
             
         }
-        .toolbar {
+        //キーボードを閉じるボタン。
+        /*.toolbar {
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
                 Button {
@@ -188,7 +177,7 @@ struct SettingsView: View {
                     Image(systemName: "chevron.down")
                 }
             }
-        }
+        }*/
         
         //Bottle capacityで0以下の数字が入っている時
         .alert("扱うことのできない値が含まれています。", isPresented: $showInputError) {

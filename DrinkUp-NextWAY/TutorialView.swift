@@ -37,7 +37,7 @@ struct TutorialView: View {
                             .foregroundColor(Color.black)
                             .bold()
                         
-                        Text("水筒を使うことで、簡単に正確な記録ができます。")
+                        Text("あなたの水筒で、簡単に正確な記録ができます。")
                             .multilineTextAlignment(.center)
                             .foregroundColor(.gray)
                             .bold()
