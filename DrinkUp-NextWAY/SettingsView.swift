@@ -201,15 +201,15 @@ struct SettingsView: View {
     private func healthHelpMessage() -> String {
         switch healthAuthStatus {
         case .authorized:
-            return "ヘルスケアへの書き込み権限は許可されています。"
+            return String(localized:"ヘルスケアへの書き込み権限は許可されています。")
             case .partial:
-            return "一部のみ許可されています。ヘルスケアアプリでDrinkUp!のアクセス権を見直してください。"
+            return String(localized:"一部のみ許可されています。ヘルスケアアプリでDrinkUp!のアクセス権を見直してください。")
         case .denied:
-            return "ヘルスケアへの書き込み権限が未許可です。ヘルスケアアプリを開いて許可してください。"
+            return String(localized:"ヘルスケアへの書き込み権限が未許可です。ヘルスケアアプリを開いて許可してください。")
         case .notDetermined:
-            return "ヘルスケアへの書き込み権限が未設定です。初回の権限リクエストや、ヘルスケアアプリから設定できます。"
+            return String(localized:"ヘルスケアへの書き込み権限が未設定です。初回の権限リクエストや、ヘルスケアアプリから設定できます。")
         case .unavailable:
-            return "このデバイスではヘルスケアが利用できません。対応デバイスでご利用ください。"
+            return String(localized:"このデバイスではヘルスケアが利用できません。対応デバイスでご利用ください。")
         }
     }
     
@@ -260,15 +260,15 @@ struct SettingsView: View {
     private func healthStatusText() -> String {
         switch healthAuthStatus {
         case .authorized:
-            return "ヘルスケア書き込み: 許可"
+            return String(localized:"ヘルスケア書き込み: 許可")
         case .partial:
-            return "ヘルスケア書き込み: 一部のみ"
+            return String(localized:"ヘルスケア書き込み: 一部のみ")
         case .denied:
-            return "ヘルスケア書き込み: 未許可"
+            return String(localized: "ヘルスケア書き込み: 未許可")
         case .notDetermined:
-            return "ヘルスケア書き込み: 未設定"
+            return String(localized:"ヘルスケア書き込み: 未設定")
         case .unavailable:
-            return "ヘルスケア書き込み: 利用不可"
+            return String(localized:"ヘルスケア書き込み: 利用不可")
         }
     }
     
