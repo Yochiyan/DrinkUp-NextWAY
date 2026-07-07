@@ -10,6 +10,7 @@ import SwiftUI
 
 struct HistoryView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var settings: AppSettings
     var records: [DrinkRecord]
 
     var body: some View {
@@ -21,7 +22,15 @@ struct HistoryView: View {
                             Text(item.date.formatted(date: .complete, time: .omitted))
                                 .font(.headline)
 
-                            Text("合計: \((item.total)) ml")
+                            let totalText: String = {
+                                if settings.unitSystem == .ml {
+                                    return "\(item.total) ml"
+                                } else {
+                                    return String(format: "%.1f oz", settings.mlToOz(item.total))
+                                }
+                            }()
+
+                            Text("合計: \(totalText)")
                                 .font(.title3)
                                 .bold()
                         }
@@ -111,4 +120,3 @@ struct HistoryView: View {
         }
     }
 }
-

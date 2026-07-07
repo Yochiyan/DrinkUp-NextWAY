@@ -68,9 +68,26 @@ struct SettingsView: View {
             }
             .listRowBackground(Color.clear)
             
-            Section("ボトル内容量(ml)") {
-                TextField("(ml)", text: $inputSize)
-                    .keyboardType(.numberPad)
+            Section("単位") {
+                Picker("単位", selection: $settings.unitSystem) {
+                    Text("mL").tag(AppSettings.UnitSystem.ml)
+                    Text("oz").tag(AppSettings.UnitSystem.oz)
+                }
+                .pickerStyle(.segmented)
+                .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
+            }
+            .listRowBackground(Color.clear)
+
+            Section("ボトル内容量(\(settings.unitSystem == .ml ? "ml" : "oz"))") {
+                let placeholder: String = {
+                    if settings.unitSystem == .ml {
+                        return "\(bottle.size)"
+                    } else {
+                        return String(format: "%.1f", settings.mlToOz(bottle.size))
+                    }
+                }()
+                TextField(placeholder, text: $inputSize)
+                    .keyboardType(settings.unitSystem == .ml ? .numberPad : .decimalPad)
                     .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
                 
             }
@@ -81,7 +98,15 @@ struct SettingsView: View {
 
             Section {
                 Button("保存して閉じる") {
-                    guard let size = Int(inputSize), size > 0 else {
+                    let newML: Int?
+                    switch settings.unitSystem {
+                    case .ml:
+                        if let ml = Int(inputSize), ml > 0 { newML = ml } else { newML = nil }
+                    case .oz:
+                        if let oz = Double(inputSize), oz > 0 { newML = settings.ozToMl(oz) } else { newML = nil }
+                    }
+
+                    guard let size = newML, size > 0 else {
                         showInputError = true
                         return
                     }
@@ -187,10 +212,36 @@ struct SettingsView: View {
         }
         .onAppear {
             updateHealthStatus()
-            inputSize = "\(bottle.size)"
+            if settings.unitSystem == .ml {
+                inputSize = "\(bottle.size)"
+            } else {
+                let oz = settings.mlToOz(bottle.size)
+                inputSize = String(format: "%.1f", oz)
+            }
         }
         .sheet(isPresented: $showAboutSheet) {
             AboutView()
+        }
+        .onChange(of: settings.unitSystem) { newUnit in
+            // Convert current input (interpreted in previous unit) to mL, then to new unit string
+            let currentML: Int = {
+                switch newUnit {
+                case .ml:
+                    // Previously was oz
+                    if let ozValue = Double(inputSize) { return settings.ozToMl(ozValue) }
+                case .oz:
+                    // Previously was ml
+                    if let mlValue = Int(inputSize) { return mlValue }
+                }
+                return bottle.size
+            }()
+
+            if newUnit == .ml {
+                inputSize = "\(currentML)"
+            } else {
+                let oz = settings.mlToOz(currentML)
+                inputSize = String(format: "%.1f", oz)
+            }
         }
     }
     
@@ -313,3 +364,4 @@ private struct BottleEditPreviewWrapper: View {
             .environmentObject(AppSettings())
     }
 }
+

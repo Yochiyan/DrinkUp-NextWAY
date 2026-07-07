@@ -1,15 +1,18 @@
 {
   "sourceLanguage" : "ja",
   "strings" : {
-    "(ml)" : {
+    " %@oz" : {
 
     },
-    "「最後の一滴を飲み干した瞬間に開いてほしい」という想いから、DrinkUp!と名付けました。\nこのアプリは、ボトルの水分摂取量を数タップで簡単に記録できます。\n日々の中で無理なく水分補給の習慣を身につけるためのシンプルなツールです。" : {
+    " %lldml" : {
+
+    },
+    "「誰もが簡単に確実に水分摂取量を把握できるように、もっと水を飲もうとする気持ちを育む。」という想いから、DrinkUp!は生まれました。\nこのアプリは、ボトルの水分摂取量を数タップで簡単に記録できます。\n日々の中で無理なく水分補給の習慣を身につけるためのシンプルなツールです。" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "I named it \\\"DrinkUp!\\\" with the hope that you'll open it right as you finish the last drop.\\nDrinkUp! is designed to help you track the water you drink from your water bottle with just a few taps, helping you develop healthy hydration habits. \\nIt's a simple and effective way to stay hydrated and make small, positive changes in your daily routine."
+            "value" : "\"I named it \\\"DrinkUp!\\\" with the hope that you'll open it right as you finish the last drop.\nDrinkUp! is designed to help you track the water you drink from your water bottle with just a few taps, helping you develop healthy hydration habits. \nIt's a simple and effective way to stay hydrated and make small, positive changes in your daily routine.\""
           }
         },
         "ko" : {
@@ -20,20 +23,17 @@
         }
       }
     },
-    "%lld ml" : {
-
-    },
-    "%lldml" : {
-
-    },
-    "+%lldml" : {
-
-    },
     "0–499 ml\n" : {
-
+      "shouldTranslate" : false
     },
     "0以上の値を入力してください。" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter a value greater than or equal to 0."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -43,10 +43,10 @@
       }
     },
     "500–799 ml\n" : {
-
+      "shouldTranslate" : false
     },
     "800–1199 ml\n" : {
-
+      "shouldTranslate" : false
     },
     "1200 mlからそれ以上\n" : {
       "localizations" : {
@@ -66,6 +66,18 @@
     },
     "About the Developer" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About the Developer"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "私たちについて"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -75,10 +87,10 @@
       }
     },
     "Achievement System" : {
-
+      "shouldTranslate" : false
     },
     "DrinkUp!" : {
-
+      "shouldTranslate" : false
     },
     "DrinkUp!について" : {
       "localizations" : {
@@ -112,14 +124,43 @@
         }
       }
     },
+    "Gerard P Grillo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gerard P Grillo"
+          }
+        }
+      },
+      "shouldTranslate" : false
+    },
+    "ml" : {
+      "shouldTranslate" : false
+    },
+    "mL" : {
+      "shouldTranslate" : false
+    },
+    "note" : {
+      "shouldTranslate" : false
+    },
     "OK" : {
-
+      "shouldTranslate" : false
+    },
+    "oz" : {
+      "shouldTranslate" : false
     },
     "Start!" : {
-
+      "shouldTranslate" : false
     },
     "Start!を押すと[プライバシーポリシー](https://cubic-bird-aa4.notion.site/DrinkUp-3527ee35cf148064968bc5e367f3eaf7)に同意したものとします。" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By pressing Start!, you agree to the [Privacy Policy](https://cubic-bird-aa4.notion.site/English-35a7ee35cf1480d2a1bcd7d393a71900?source=copy_link)."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -128,8 +169,8 @@
         }
       }
     },
-    "Type here!" : {
-
+    "Threads" : {
+      "shouldTranslate" : false
     },
     "Version %@ (%@)" : {
       "localizations" : {
@@ -139,10 +180,23 @@
             "value" : "Version %1$@ (%2$@)"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "Why I made this app" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Why I made this app"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "なんでつくったの?"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -151,11 +205,20 @@
         }
       }
     },
+    "X" : {
+      "shouldTranslate" : false
+    },
     "Yoshihisa Kashima" : {
-
+      "shouldTranslate" : false
     },
     "あなたの水筒で、簡単に正確な記録ができます。" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Easily and accurately track hydration with your own bottle."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -166,6 +229,12 @@
     },
     "キャンセル" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -176,6 +245,12 @@
     },
     "このシステムは、数字を視覚的なフィードバックに変換し成長と達成を通して習慣形成を促します。" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This system turns numbers into visual feedback to encourage habit building through growth and achievement."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -186,6 +261,12 @@
     },
     "このデバイスではヘルスケアが利用できません。対応デバイスでご利用ください。" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health is not available on this device. Please use a supported device."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -196,6 +277,12 @@
     },
     "こんにちは！" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hello!"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -206,6 +293,12 @@
     },
     "こんばんは！" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Good evening!"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -216,6 +309,12 @@
     },
     "チュートリアルを開始" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Tutorial"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -226,6 +325,12 @@
     },
     "プライバシーポリシー" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy Policy"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -236,6 +341,12 @@
     },
     "ヘルスケアへの書き込み権限が未設定です。初回の権限リクエストや、ヘルスケアアプリから設定できます。" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health write permission is not configured. You can allow it during the first permission request or in the Health app."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -246,6 +357,12 @@
     },
     "ヘルスケアへの書き込み権限が未許可です。ヘルスケアアプリを開いて許可してください。" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health write permission is denied. Please open the Health app and allow access."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -256,6 +373,12 @@
     },
     "ヘルスケアへの書き込み権限は許可されています。" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health write permission is granted."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -266,6 +389,12 @@
     },
     "ヘルスケアを開く" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Health"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -276,6 +405,12 @@
     },
     "ヘルスケアを開く↗︎" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Health ↗︎"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -286,6 +421,12 @@
     },
     "ヘルスケア書き込み: 一部のみ" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health Write: Partial"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -296,6 +437,12 @@
     },
     "ヘルスケア書き込み: 利用不可" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health Write: Unavailable"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -306,6 +453,12 @@
     },
     "ヘルスケア書き込み: 未設定" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health Write: Not Set"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -316,6 +469,12 @@
     },
     "ヘルスケア書き込み: 未許可" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health Write: Denied"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -326,6 +485,12 @@
     },
     "ヘルスケア書き込み: 許可" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health Write: Allowed"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -336,6 +501,12 @@
     },
     "ヘルスケア権限について" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About Health Permissions"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -346,6 +517,12 @@
     },
     "ヘルスケア連携" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health Integration"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -354,28 +531,34 @@
         }
       }
     },
-    "ボトル内容量(ml)" : {
+    "ボトル内容量(%@)" : {
       "localizations" : {
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "물병 용량(ml)"
+            "value" : "물병 용량(%@)"
           }
         }
       }
     },
-    "マイボトルの容量を入力してください(ml)" : {
+    "マイボトルの容量を入力してください(%@)" : {
       "localizations" : {
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "내 물병의 용량을 입력해주세요.(ml)"
+            "value" : "물병 용량(%@)"
           }
         }
       }
     },
     "マイボトル以外の水分補給" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hydration Outside My Bottle"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -384,7 +567,7 @@
         }
       }
     },
-    "マシュマロ" : {
+    "マシュマロ(サポート)" : {
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -396,6 +579,12 @@
     },
     "もしかして：超能力者ですか？" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wait... are you a psychic?"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -404,8 +593,30 @@
         }
       }
     },
+    "リンク集" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Links"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "링크 모음 "
+          }
+        }
+      }
+    },
     "一部のみ許可されています。ヘルスケアアプリでDrinkUp!のアクセス権を見直してください。" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only partial access is allowed. Please review DrinkUp!'s permissions in the Health app."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -416,6 +627,12 @@
     },
     "今まで: %lldml" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Life time total: %lldml"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -424,18 +641,52 @@
         }
       }
     },
-    "今日: %lldml" : {
+    "今日:" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today:"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "오늘 마신 양: %lldml"
+            "value" : "오늘:"
+          }
+        }
+      }
+    },
+    "今日oz:" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today:"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日:"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "오늘:"
           }
         }
       }
     },
     "今週: %lldml" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This Week: %lldml"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -446,6 +697,12 @@
     },
     "保存して閉じる" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save and Close"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -456,6 +713,12 @@
     },
     "元に戻す" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undo"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -466,6 +729,12 @@
     },
     "最後にした記録が取り消されます。\niPhoneを投げないように気をつけてください★" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your most recent record will be removed.\nPlease don't throw your iPhone ★"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -474,8 +743,47 @@
         }
       }
     },
-    "合計: %lld ml" : {
+    "単位" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unit"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "단위"
+          }
+        }
+      }
+    },
+    "合計: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total:%@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "합계:%@"
+          }
+        }
+      }
+    },
+    "合計: %lld ml" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total: %lld ml"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -486,6 +794,12 @@
     },
     "履歴" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "History"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -494,18 +808,30 @@
         }
       }
     },
-    "必要量な水分は性別や体型によって異なります。\nAchievement Systemを過度に依存しないでください。\n\n\n" : {
+    "必要な水分量は性別や体型によって異なります。\nAchievement Systemを過度に依存しないでください。\n\n\n" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your daily water needs depend on your gender and body size.\nPlease do not rely excessively on the Achievement System."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "필요한 수분량은 성별과 체형에 따라 다릅니다. Achievement System을 과도하게 의존하지 말아주세요."
+            "value" : "필요한 수분 섭취량은 성별이나 체형에 따라 다릅니다.Achievement System에 너무 의존하지 마세요."
           }
         }
       }
     },
     "扱うことのできない値が含まれています。" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contains unsupported values."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -516,6 +842,12 @@
     },
     "本当にリセットしますか？\nこの操作は元に戻せません。" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to reset?\nThis action cannot be undone."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -526,6 +858,12 @@
     },
     "次へ" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -536,6 +874,12 @@
     },
     "毎日の水分摂取量状況を直感的に分かりやすく伝えます。" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Understand your daily hydration status at a glance."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -546,6 +890,12 @@
     },
     "水分をシンプルに記録" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Track Hydration Simply"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -556,6 +906,12 @@
     },
     "水筒の中身を飲み切ったらタップ、\n長押しで一時的に自由入力できます。" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap when you finish your bottle,\nor long press for temporary manual input."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -566,6 +922,12 @@
     },
     "注意！" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warning!"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -576,6 +938,12 @@
     },
     "注意！\n厚生労働省によると、成人の1日の最低水分摂取量は1.2Lです。実際の必要量は性別や体格によって異なります。この目安を過度に頼らないでください。\n" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warning!\nAccording to the Ministry of Health, Labour and Welfare, the minimum daily water intake for adults is 1.2L. Actual hydration needs vary depending on gender and body type. Please do not rely too heavily on this guideline.\nRequired water intake varies depending on gender and body type."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -586,6 +954,12 @@
     },
     "直近の記録が取り消されました！" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The latest record has been undone!"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -596,6 +970,12 @@
     },
     "簡単に水分補給の記録ができます。" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Easily record your hydration."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -606,6 +986,12 @@
     },
     "続ける" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -614,8 +1000,46 @@
         }
       }
     },
+    "英語翻訳" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "English Translation"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "영어 번역"
+          }
+        }
+      }
+    },
+    "製作者" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Created by"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "만든 이"
+          }
+        }
+      }
+    },
     "設定" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -626,6 +1050,12 @@
     },
     "許可された場合のみ\nヘルスケアに水分データを書き込みます。\nデータはデバイス内で管理され、\n開発者が取得することはありません。\n許可しない場合でもアプリは通常通り利用できます。" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only when permission is granted,\nhydration data will be written to Health.\nAll data is stored on your device,\nand is never collected by the developer.\nThe app works normally even without permission."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -636,6 +1066,12 @@
     },
     "追加" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -646,16 +1082,34 @@
     },
     "連続日数: %lld日" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld streak day"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld日連続"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "연속 일수:%lld일"
+            "value" : "%lld일연속"
           }
         }
       }
     },
     "閉じる" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -666,6 +1120,12 @@
     },
     "間違えたらiPhoneを振る" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shake your iPhone \nif you make a mistake"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -674,8 +1134,46 @@
         }
       }
     },
+    "韓国のお友達🫰🏻" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A friend from Korea🫰🏻"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "내 한국 친구 🫰🏻"
+          }
+        }
+      }
+    },
+    "韓国語翻訳" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Korean Translation"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "한국어 번역"
+          }
+        }
+      }
+    },
     "飲んだら青いボタンを押す" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press the blue button after drinking"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",

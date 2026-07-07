@@ -34,7 +34,7 @@ struct AboutView: View {
                     // App Version
                     let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
                     let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
-
+                    
                     Text("Version \(version) (\(build))")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
@@ -44,23 +44,35 @@ struct AboutView: View {
                     
                     Group {
                         Text("Why I made this app")
-                            .font(.headline)
+                            .font(.title3)
                         
-                        Text("「最後の一滴を飲み干した瞬間に開いてほしい」という想いから、DrinkUp!と名付けました。\nこのアプリは、ボトルの水分摂取量を数タップで簡単に記録できます。\n日々の中で無理なく水分補給の習慣を身につけるためのシンプルなツールです。")
+                        Text("「誰もが簡単に確実に水分摂取量を把握できるように、もっと水を飲もうとする気持ちを育む。」という想いから、DrinkUp!は生まれました。\nこのアプリは、ボトルの水分摂取量を数タップで簡単に記録できます。\n日々の中で無理なく水分補給の習慣を身につけるためのシンプルなツールです。")
                     }
                     
                     Group {
                         Text("About the Developer")
+                            .font(.title3)
+                        Text("製作者")
                             .font(.headline)
-                        
                         Text("Yoshihisa Kashima")
-                        Link("マシュマロ", destination: URL(string: "https://marshmallow-qa.com/1mtb1vn4livqyh7")!)
+                        Text("英語翻訳")
+                            .font(.headline)
+                        Text("Gerard P Grillo")
+                        Text("韓国語翻訳")
+                            .font(.headline)
+                        Text("韓国のお友達🫰🏻")
+                        Text("リンク集")
+                            .font(.title3)
                         Link("プライバシーポリシー", destination: URL(string: "https://cubic-bird-aa4.notion.site/DrinkUp-3527ee35cf148064968bc5e367f3eaf7")!)
+                        Link("マシュマロ(サポート)", destination: URL(string: "https://marshmallow-qa.com/1mtb1vn4livqyh7")!)
+                        Link("Threads", destination: URL(string: "https://www.threads.com/@drinkup_niigata?igshid=NTc4MTIwNjQ2YQ==")!)
+                        Link("note", destination: URL(string: "https://note.com/k_yochiyan")!)
+                        Link("X", destination: URL(string: "https://x.com/drinkup_niigata?s=21")!)
                     }
                     Group {
                         Text("注意！")
                             .font(.headline)
-                        Text("必要量な水分は性別や体型によって異なります。\nAchievement Systemを過度に依存しないでください。\n\n\n")
+                        Text("必要な水分量は性別や体型によって異なります。\nAchievement Systemを過度に依存しないでください。\n\n\n")
                     }
                 }
                 .padding()
@@ -81,4 +93,7 @@ struct AboutView: View {
             }
         }
     }
+}
+#Preview {
+    AboutView()
 }

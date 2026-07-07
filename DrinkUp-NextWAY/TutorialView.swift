@@ -40,7 +40,7 @@ struct TutorialView: View {
                         Text("あなたの水筒で、簡単に正確な記録ができます。")
                             .multilineTextAlignment(.center)
                             .foregroundColor(.gray)
-                            .bold()
+                            
                     }
                 }
                 
@@ -60,7 +60,7 @@ struct TutorialView: View {
                         Text("水筒の中身を飲み切ったらタップ、\n長押しで一時的に自由入力できます。")
                             .multilineTextAlignment(.center)
                             .foregroundColor(.gray)
-                            .bold()
+                            
                     }//+300
                 }
                 
@@ -80,7 +80,7 @@ struct TutorialView: View {
                         Text("最後にした記録が取り消されます。\niPhoneを投げないように気をつけてください★")
                             .multilineTextAlignment(.center)
                             .foregroundColor(.gray)
-                            .bold()
+                            
                     }
                 }
                 
@@ -108,7 +108,7 @@ struct TutorialView: View {
                         Text("許可された場合のみ\nヘルスケアに水分データを書き込みます。\nデータはデバイス内で管理され、\n開発者が取得することはありません。\n許可しない場合でもアプリは通常通り利用できます。")
                             .multilineTextAlignment(.center)
                             .foregroundColor(.gray)
-                            .bold()
+                            
                     }
                 }
                 

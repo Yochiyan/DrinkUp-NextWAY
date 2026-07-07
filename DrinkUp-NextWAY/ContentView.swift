@@ -59,12 +59,28 @@ struct ContentView: View {
         }
     }
     // MARK: - Subviews to reduce type-checking complexity
-    @ViewBuilder
+    
     private func HeaderView(bottle: Bottle) -> some View {
-        Text("今日: \(todayTotal())ml")
-            .environment(\.locale, .current)
+        let value = todayTotal()
+
+        if settings.unitSystem == .ml {
+            return (
+                Text("今日:")
+                + Text(" \(value)ml")
+            )
             .font(.largeTitle)
             .fontWeight(.bold)
+
+        } else {
+            let oz = settings.mlToOz(value)
+
+            return (
+                Text("今日oz:")
+                + Text(" \(String(format: "%.1f", oz))oz")
+            )
+            .font(.largeTitle)
+            .fontWeight(.bold)
+        }
     }
     
     @ViewBuilder
@@ -76,14 +92,12 @@ struct ContentView: View {
                 HStack {
                     Image(systemName: "gear")
                     Text("設定")
-                        .font(.system(size: 20, weight: .bold))
+                        .font(.system(size: 20))
                 }
                 .environment(\.locale, .current)
-                .fontWeight(.bold)
-                .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(Color.blue)
+                .background(Color.clear)
                 .cornerRadius(10)
             }
             .buttonStyle(.plain)
@@ -91,9 +105,9 @@ struct ContentView: View {
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .stroke(Color.white.opacity(0.35), lineWidth: 1)
+                    .stroke(colorScheme == .dark ? .white.opacity(0.35) : Color.gray, lineWidth: 1)
             )
-            .shadow(color: .black.opacity(0.2), radius: 10, y: 6)
+            //.shadow(color: .black.opacity(0.2), radius: 10, y: 6)
             
             Button {
                 showHistory = true
@@ -101,12 +115,12 @@ struct ContentView: View {
                 HStack {
                     Image(systemName: "calendar")
                     Text("履歴")
-                        .font(.system(size: 20, weight: .bold))
+                        .font(.system(size: 20))
                 }
-                .foregroundColor(.white)
+                //.foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(Color.blue)
+                .background(Color.clear)
                 .cornerRadius(10)
             }
             .buttonStyle(.plain)
@@ -114,9 +128,8 @@ struct ContentView: View {
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .stroke(Color.white.opacity(0.35), lineWidth: 1)
+                    .stroke(colorScheme == .dark ? .white.opacity(0.35) : Color.gray, lineWidth: 1)
             )
-            .shadow(color: .black.opacity(0.2), radius: 10, y: 6)
         }
         .frame(maxWidth: .infinity)
     }
@@ -175,7 +188,15 @@ struct ContentView: View {
                 isAdding = false
             }
         }) {
-            Text("+\(bottle.size)ml")
+            let addLabel: String = {
+                if settings.unitSystem == .ml {
+                    return "+\(bottle.size)ml"
+                } else {
+                    let oz = settings.mlToOz(bottle.size)
+                    return String(format: "+%.1foz", oz)
+                }
+            }()
+            Text(addLabel)
                 .font(.system(size: 30, weight: .bold))
                 .environment(\.locale, .current)
                 .fontWeight(.bold)
@@ -201,26 +222,44 @@ struct ContentView: View {
                 }
         )
         .alert("マイボトル以外の水分補給", isPresented: $showCustomAddSheet) {
-            TextField("\(bottle.size)ml", text: $customAddInput)
-                .keyboardType(.numberPad)
+            let placeholder: String = {
+                if settings.unitSystem == .ml {
+                    return "\(bottle.size)ml"
+                } else {
+                    return String(format: "%.1foz", settings.mlToOz(bottle.size))
+                }
+            }()
+            TextField(placeholder, text: $customAddInput)
+                .keyboardType(settings.unitSystem == .ml ? .numberPad : .decimalPad)
             Button("キャンセル", role: .cancel) {
                 customAddInput = ""
             }
             Button("追加") {
                 if isAdding { return }
-                if let value = Int(customAddInput), value > 0 {
-                    isAdding = true
-                    let impact = UIImpactFeedbackGenerator(style: .medium)
-                    impact.impactOccurred()
-                    let record = DrinkRecord(date: Date(), amount: value)
-                    records.append(record)
-                    saveWaterToHealthKit(amount: value)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                        isAdding = false
+                switch settings.unitSystem {
+                case .ml:
+                    if let value = Int(customAddInput), value > 0 {
+                        isAdding = true
+                        let impact = UIImpactFeedbackGenerator(style: .medium)
+                        impact.impactOccurred()
+                        let record = DrinkRecord(date: Date(), amount: value)
+                        records.append(record)
+                        saveWaterToHealthKit(amount: value)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { isAdding = false }
+                    }
+                case .oz:
+                    if let oz = Double(customAddInput), oz > 0 {
+                        isAdding = true
+                        let impact = UIImpactFeedbackGenerator(style: .medium)
+                        impact.impactOccurred()
+                        let ml = settings.ozToMl(oz)
+                        let record = DrinkRecord(date: Date(), amount: ml)
+                        records.append(record)
+                        saveWaterToHealthKit(amount: ml)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { isAdding = false }
                     }
                 }
                 customAddInput = ""
-                
             }
         } message: {
             Text("もしかして：超能力者ですか？")
@@ -232,7 +271,15 @@ struct ContentView: View {
         List(records.indices.reversed(), id: \.self) { index in
             let record = records[index]
             VStack(alignment: .leading) {
-                Text("\(record.amount) ml").fontWeight(.bold)
+                let amountText: String = {
+                    if settings.unitSystem == .ml {
+                        return "\(record.amount) ml"
+                    } else {
+                        let oz = settings.mlToOz(record.amount)
+                        return String(format: "%.1f oz", oz)
+                    }
+                }()
+                Text(amountText).fontWeight(.bold)
                 Text(record.date.formatted(date: .abbreviated, time: .shortened))
                     .font(.caption)
                     .foregroundColor(.gray)
@@ -276,12 +323,23 @@ struct ContentView: View {
             .shadow(radius: 10)
         )
         
-        Text("マイボトルの容量を入力してください(ml)")
+        
+        let unitLabel = settings.unitSystem == .ml ? "ml" : "oz"
+
+        Picker("単位", selection: $settings.unitSystem) {
+            Text("ml").tag(AppSettings.UnitSystem.ml)
+            Text("oz").tag(AppSettings.UnitSystem.oz)
+        }
+        .pickerStyle(.segmented)
+        .padding(.horizontal)
+
+        Text("マイボトルの容量を入力してください(\(unitLabel))")
             .environment(\.locale, .current)
             .bold()
         
-        TextField("Type here!", text: $inputSize)
-            .keyboardType(.numberPad)
+        let welcomePlaceholder = settings.unitSystem == .ml ? "300" : "10.1"
+        TextField(welcomePlaceholder, text: $inputSize)
+            .keyboardType(settings.unitSystem == .ml ? .numberPad : .decimalPad)
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .frame(width: 200)
             .toolbar {
@@ -300,9 +358,18 @@ struct ContentView: View {
         
         
         Button("Start!") {
-            if let size = Int(inputSize) {
-                let newBottle = Bottle(size: size)
-                bottles = [newBottle]
+            switch settings.unitSystem {
+            case .ml:
+                if let size = Int(inputSize), size > 0 {
+                    let newBottle = Bottle(size: size)
+                    bottles = [newBottle]
+                }
+            case .oz:
+                if let oz = Double(inputSize), oz > 0 {
+                    let ml = settings.ozToMl(oz)
+                    let newBottle = Bottle(size: ml)
+                    bottles = [newBottle]
+                }
             }
         }
         .padding()
@@ -371,15 +438,28 @@ struct ContentView: View {
                         }
                         .sheet(isPresented: $showHistory) {
                             HistoryView(records: records)
+                                .environmentObject(settings)
                         }
                     //Information
-                    Text("今週: \(weekTotal())ml")
-                        .font(.headline)
+                    let week = weekTotal()
+                    if settings.unitSystem == .ml {
+                        Text("今週: \(week)ml").font(.headline)
+                    } else {
+                        let weekOz = settings.mlToOz(week)
+                        Text(String(format: "今週: %.1foz", weekOz)).font(.headline)
+                    }
 
                     let total = records.reduce(0) { $0 + $1.amount }
-                    Text("今まで: \(total)ml")
-                        .font(.headline)
-                        .environment(\.locale, .current)
+                    if settings.unitSystem == .ml {
+                        Text("今まで: \(total)ml")
+                            .font(.headline)
+                            .environment(\.locale, .current)
+                    } else {
+                        let totalOz = settings.mlToOz(total)
+                        Text(String(format: "今まで: %.1foz", totalOz))
+                            .font(.headline)
+                            .environment(\.locale, .current)
+                    }
 
                     SavingsView(total: total)
 
@@ -396,7 +476,7 @@ struct ContentView: View {
                             Image(systemName: "info.bubble")
                             Text("Achievement System")
                         }
-                        .font(.footnote.weight(.semibold))
+                        .font(.caption)
                         .foregroundStyle(.blue)
                         .padding(.vertical, 6)
                         .padding(.horizontal, 10)
@@ -513,37 +593,52 @@ struct ContentView: View {
     //StreakDays()
     private func streakDays() -> Int {
         let cal = Calendar.current
-        let uniqueDays = Set(records.map {cal.startOfDay(for: $0.date)})
-        
-        var streak: Int = 0
-            var currentDay = cal.startOfDay(for: today)
-            // 今日記録が無ければ昨日から開始
-            if !uniqueDays.contains(currentDay) {
-                guard let yesterday = cal.date(byAdding: .day, value: -1, to: currentDay) else {
-                    return 0
-                }
-                currentDay = yesterday
-            }
-            while uniqueDays.contains(currentDay) {
+        let uniqueDays = Set(records.map { cal.startOfDay(for: $0.date) })
 
-                streak += 1
+        let todayStart = cal.startOfDay(for: today)
 
-                guard let previousDay = cal.date(byAdding: .day, value: -1, to: currentDay) else {
-                    break
-                }
-                currentDay = previousDay
+        let hasTodayRecord = uniqueDays.contains(todayStart)
+
+        let startDay: Date
+
+        // 今日記録している場合
+        if hasTodayRecord {
+            startDay = todayStart
+        } else {
+
+            // 昨日に記録がなければ streak終了
+            guard let yesterday = cal.date(byAdding: .day, value: -1, to: todayStart),
+                  uniqueDays.contains(yesterday) else {
+                return 0
             }
-            return streak
+
+            // 昨日までは継続扱い
+            startDay = yesterday
+        }
+
+        var streak = 0
+        var currentDay = startDay
+
+        while uniqueDays.contains(currentDay) {
+            streak += 1
+
+            guard let previousDay = cal.date(byAdding: .day, value: -1, to: currentDay) else {
+                break
+            }
+
+            currentDay = previousDay
+        }
+
+        return streak
     }
     
-    private func todayCount() -> Int {
+    private func hasRecordedToday() -> Bool {
         let cal = Calendar.current
-        let start = cal.startOfDay(for: today)
-        guard let end = cal.date(byAdding: .day, value: 1, to: start) else { return 0 }
+        let todayStart = cal.startOfDay(for: today)
 
-        return records
-            .filter { $0.date >= start && $0.date < end }
-            .count
+        return records.contains {
+            cal.isDate($0.date, inSameDayAs: todayStart)
+        }
     }
     
     // MARK: - UserDefaults Persistence
