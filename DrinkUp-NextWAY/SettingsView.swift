@@ -28,6 +28,7 @@ struct SettingsView: View {
     }
     @State private var healthAuthStatus: HealthAuthStatus = .notDetermined
     @State private var showHealthHelp: Bool = false
+    @ObservedObject private var notificationManager = NotificationManager.shared
     
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var settings: AppSettings
@@ -77,6 +78,52 @@ struct SettingsView: View {
                 .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
             }
             .listRowBackground(Color.clear)
+
+            Section("通知") {
+                Toggle("飲み忘れ通知", isOn: $notificationManager.isInactivityReminderEnabled)
+                    .onChange(of: notificationManager.isInactivityReminderEnabled) { _, isEnabled in
+                        Task {
+                            if isEnabled {
+                                await notificationManager.requestAuthorization()
+                            } else {
+                                notificationManager.cancelInactivityReminders()
+                            }
+                        }
+                    }
+
+                Toggle("朝の通知", isOn: $notificationManager.isMorningNotificationEnabled)
+                    .onChange(of: notificationManager.isMorningNotificationEnabled) { _, isEnabled in
+                        Task {
+                            if isEnabled {
+                                await notificationManager.requestAuthorization()
+                            } else {
+                                notificationManager.cancelMorningNotification()
+                            }
+                        }
+                    }
+
+                DatePicker(
+                    "時刻",
+                    selection: $notificationManager.morningNotificationTime,
+                    displayedComponents: .hourAndMinute
+                )
+                .disabled(!notificationManager.isMorningNotificationEnabled)
+                .onChange(of: notificationManager.morningNotificationTime) { _, _ in
+                    Task {
+                        await notificationManager.scheduleMorningNotificationIfNeeded()
+                    }
+                }
+
+                if notificationManager.authorizationStatus == .denied {
+                    Button("通知設定を開く") {
+                        guard let url = URL(string: UIApplication.openSettingsURLString) else {
+                            return
+                        }
+                        UIApplication.shared.open(url)
+                    }
+                }
+            }
+           
 
             Section("ボトル内容量(\(settings.unitSystem == .ml ? "ml" : "oz"))") {
                 let placeholder: String = {
@@ -364,4 +411,3 @@ private struct BottleEditPreviewWrapper: View {
             .environmentObject(AppSettings())
     }
 }
-

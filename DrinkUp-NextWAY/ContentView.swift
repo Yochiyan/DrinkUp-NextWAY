@@ -12,6 +12,7 @@ import Foundation
 import HealthKit
 struct ContentView: View {
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.scenePhase) private var scenePhase
     @StateObject private var settings = AppSettings()
     @State private var bottles: [Bottle] = []
     @State private var records: [DrinkRecord] = []
@@ -182,6 +183,7 @@ struct ContentView: View {
             records.append(newRecord)
             lastDeletedRecord = nil
             saveWaterToHealthKit(amount: bottle.size)//ヘルスケアへの書き込み
+            NotificationManager.shared.cancelInactivityReminders()
 
             // 短いクールダウンで連打を防止
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
@@ -245,6 +247,7 @@ struct ContentView: View {
                         let record = DrinkRecord(date: Date(), amount: value)
                         records.append(record)
                         saveWaterToHealthKit(amount: value)
+                        NotificationManager.shared.cancelInactivityReminders()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { isAdding = false }
                     }
                 case .oz:
@@ -256,6 +259,7 @@ struct ContentView: View {
                         let record = DrinkRecord(date: Date(), amount: ml)
                         records.append(record)
                         saveWaterToHealthKit(amount: ml)
+                        NotificationManager.shared.cancelInactivityReminders()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { isAdding = false }
                     }
                 }
@@ -545,6 +549,19 @@ struct ContentView: View {
         }
         .onAppear {
             loadData()
+            NotificationManager.shared.cancelInactivityReminders()
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+            switch newPhase {
+            case .background:
+                Task {
+                    await NotificationManager.shared.scheduleInactivityReminders()
+                }
+            case .active:
+                NotificationManager.shared.cancelInactivityReminders()
+            default:
+                break
+            }
         }
         .onChange(of: bottles) { newValue in
             if !newValue.isEmpty {
@@ -693,4 +710,3 @@ extension View {
         dismissKeyboard()
     }
 }
-

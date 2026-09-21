@@ -84,7 +84,7 @@ struct TutorialView: View {
                     }
                 }
                 
-                else {
+                else if step == 3 {
                     VStack(spacing: 16) {
                         Text("ヘルスケア連携")
                             .font(.title)
@@ -111,17 +111,42 @@ struct TutorialView: View {
                             
                     }
                 }
+
+                else {
+                    VStack(spacing: 16) {
+                        Image(systemName: "bell.badge.fill")
+                            .font(.system(size: 64))
+                            .foregroundStyle(.white)
+
+                        Text("飲み忘れをお知らせ")
+                            .font(.title)
+                            .foregroundColor(.black)
+                            .bold()
+
+                        Text("希望する場合は、下のボタンを押すとDrinkUp!が、通知を送信します。")
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.gray)
+
+                        Button("通知を許可する") {
+                            Task {
+                                await NotificationManager.shared.requestAuthorization()
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .bold()
+                    }
+                }
                 
                 Spacer()
                 
                 Button(action: {
-                    if step < 3 {
+                    if step < 4 {
                         step += 1
                     } else {
                         onFinish()
                     }
                 }) {
-                    Text(step < 3 ? "次へ" : "続ける")
+                    Text(step < 4 ? "次へ" : "続ける")
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -140,4 +165,3 @@ struct TutorialView: View {
             // プレビュー用なので何もしない
         }
     }
-

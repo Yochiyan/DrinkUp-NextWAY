@@ -11,9 +11,15 @@ import UIKit
 
 @main
 struct DrinkUpApp: App {
-    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
+
+    init() {
+        Task {
+            await NotificationManager.shared.refreshAuthorizationStatus()
+            await NotificationManager.shared.scheduleMorningNotificationIfNeeded()
+        }
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()
