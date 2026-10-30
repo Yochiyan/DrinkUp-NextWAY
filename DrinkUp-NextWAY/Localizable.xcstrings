@@ -2,10 +2,10 @@
   "sourceLanguage" : "ja",
   "strings" : {
     " %@oz" : {
-
+      "shouldTranslate" : false
     },
     " %lldml" : {
-
+      "shouldTranslate" : false
     },
     "「誰もが簡単に確実に水分摂取量を把握できるように、もっと水を飲もうとする気持ちを育む。」という想いから、DrinkUp!は生まれました。\nこのアプリは、ボトルの水分摂取量を数タップで簡単に記録できます。\n日々の中で無理なく水分補給の習慣を身につけるためのシンプルなツールです。" : {
       "localizations" : {
