@@ -29,7 +29,7 @@ final class HealthKitManager {
         
         healthStore.requestAuthorization(
             toShare: [waterType],
-            read: [waterType]
+            read: []
         ) { success, _ in
             completion(success)
         }

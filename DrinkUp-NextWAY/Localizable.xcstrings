@@ -24,7 +24,20 @@
       }
     },
     "%lldmLの水分を記録しました。" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recorded %lld mL of fluid intake."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldmL의 수분을 기록했어요."
+          }
+        }
+      }
     },
     "0–499 ml\n" : {
       "shouldTranslate" : false
@@ -46,7 +59,20 @@
       }
     },
     "1mL以上の水分量を指定してください。" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please insert a water volume of 1 mL or more."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1mL 이상의 수분량을 입력해 주세요."
+          }
+        }
+      }
     },
     "500–799 ml\n" : {
       "shouldTranslate" : false
@@ -99,7 +125,20 @@
       "shouldTranslate" : false
     },
     "DrinkUp!で水筒の容量を設定してから、もう一度お試しください。" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please set your bottle capacity in DrinkUp! and then try again."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DrinkUp!에서 물병 용량을 설정한 후 다시 시도해 주세요."
+          }
+        }
+      }
     },
     "DrinkUp!について" : {
       "localizations" : {
@@ -118,7 +157,20 @@
       }
     },
     "DrinkUp!に登録されている水筒の容量を水分摂取量として記録します。" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The capacity of the water bottle registered in DrinkUp! is recorded as your water intake."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DrinkUp!에 등록된 물병 용량을 수분 섭취량으로 기록합니다."
+          }
+        }
+      }
     },
     "DrinkUp!をリセット" : {
       "localizations" : {
@@ -545,6 +597,12 @@
     },
     "ボトル内容量(%@)" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your tumbler(%@)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -555,6 +613,12 @@
     },
     "マイボトルの容量を入力してください(%@)" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter the capacity of your bottle (%@)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -568,19 +632,25 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hydration Outside My Bottle"
+            "value" : "Drinking something else?"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "내 물병 외의 수분 섭취"
+            "value" : "다른 걸 마셨나요?"
           }
         }
       }
     },
     "マシュマロ(サポート)" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -594,13 +664,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wait... are you a psychic?"
+            "value" : "Need a crystal ball to know how much?"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "혹시... 초능력자이신가요?"
+            "value" : "혹시... 마음을 읽는 능력이 있으세요?"
           }
         }
       }
@@ -685,7 +755,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "오늘:"
           }
         }
@@ -708,7 +778,20 @@
       }
     },
     "何mL飲みましたか？" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How many mL did you drink?"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "몇 mL를 마셨나요?"
+          }
+        }
+      }
     },
     "保存して閉じる" : {
       "localizations" : {
@@ -824,7 +907,20 @@
       }
     },
     "希望する場合は、下のボタンを押すとDrinkUp!が、通知を送信します。" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you'd like, tap the button below to allow DrinkUp! to send you notifications."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "원하시면 아래 버튼을 눌러 DrinkUp!의 알림을 받아보세요."
+          }
+        }
+      }
     },
     "必要な水分量は性別や体型によって異なります。\nAchievement Systemを過度に依存しないでください。\n\n\n" : {
       "localizations" : {
@@ -859,16 +955,68 @@
       }
     },
     "指定した水分量を記録します。" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record the specified moisture content."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "입력한 수분량을 기록합니다."
+          }
+        }
+      }
     },
     "摂取量（mL）" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intake (mL)"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "섭취량(mL)"
+          }
+        }
+      }
     },
     "時刻" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clock"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시간"
+          }
+        }
+      }
     },
     "朝の通知" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morning notification"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아침 알림"
+          }
+        }
+      }
     },
     "本当にリセットしますか？\nこの操作は元に戻せません。" : {
       "localizations" : {
@@ -919,7 +1067,20 @@
       }
     },
     "水分を ${amount} mL 記録" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record ${amount} mL of fluid intake"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "수분 ${amount} mL 기록"
+          }
+        }
+      }
     },
     "水分をシンプルに記録" : {
       "localizations" : {
@@ -938,19 +1099,84 @@
       }
     },
     "水分を記録" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record fluid intake"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "수분 기록"
+          }
+        }
+      }
     },
     "水分摂取量を保存できませんでした。" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not save the fluid intake amount."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "수분 섭취량을 저장하지 못했어요"
+          }
+        }
+      }
     },
     "水分量を記録" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record water intake"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "수분량 기록"
+          }
+        }
+      }
     },
     "水筒から水分を記録" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log water intake from your water bottle"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "물병의 용량으로 수분 기록"
+          }
+        }
+      }
     },
     "水筒から記録" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recording from a your bottle"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "물병으로 기록"
+          }
+        }
+      }
     },
     "水筒の中身を飲み切ったらタップ、\n長押しで一時的に自由入力できます。" : {
       "localizations" : {
@@ -1129,13 +1355,52 @@
       }
     },
     "通知" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notification"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "알림"
+          }
+        }
+      }
     },
     "通知を許可する" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow notifications"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "알림 허용"
+          }
+        }
+      }
     },
     "通知設定を開く" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open notification settings"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "알림 설정 열기"
+          }
+        }
+      }
     },
     "連続日数: %lld日" : {
       "localizations" : {
@@ -1224,10 +1489,36 @@
       }
     },
     "飲み忘れをお知らせ" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remind you to drink"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "수분 섭취 알림"
+          }
+        }
+      }
     },
     "飲み忘れ通知" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drink reminders"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "수분 섭취 알림"
+          }
+        }
+      }
     },
     "飲んだら青いボタンを押す" : {
       "localizations" : {

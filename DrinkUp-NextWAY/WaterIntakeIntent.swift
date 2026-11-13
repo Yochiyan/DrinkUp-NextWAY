@@ -159,8 +159,8 @@ struct DrinkUpAppShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: LogBottleWaterIntent(),
             phrases: [
-                "水筒から飲んだよ \(.applicationName)",
-                "水筒から飲んだ \(.applicationName)"
+                "\(.applicationName)に水筒飲み干したよって伝えて",
+                "水筒飲み干したよ\(.applicationName)"
             ],
             shortTitle: "水筒から記録",
             systemImageName: "drop.fill"
@@ -169,8 +169,8 @@ struct DrinkUpAppShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: LogWaterAmountIntent(),
             phrases: [
-                "水分を記録して \(.applicationName)",
-                "水分を記録 \(.applicationName)"
+                "水を飲んだよ\(.applicationName) ",
+                "\(.applicationName)で水分を記録"
             ],
             shortTitle: "水分を記録",
             systemImageName: "drop.fill"

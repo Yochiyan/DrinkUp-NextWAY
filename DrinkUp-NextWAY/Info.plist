@@ -4,5 +4,7 @@
 <dict>
 	<key>CFBundleSpokenName</key>
 	<string>ドリンクアップ</string>
+	<key>INAlternativeAppNamePronunciationHint</key>
+	<string>ドリンクカップ</string>
 </dict>
 </plist>

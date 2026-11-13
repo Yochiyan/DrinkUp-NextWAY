@@ -9,7 +9,7 @@ import SwiftUI
 import UIKit
 import Combine
 import Foundation
-import HealthKit
+
 struct ContentView: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.scenePhase) private var scenePhase
@@ -28,37 +28,18 @@ struct ContentView: View {
     @State private var showTutorial = false // チュートリアル表示フラグ
     @State private var lastDeletedRecord: DrinkRecord? = nil//振って取り消し
     @State private var showUndoToast: Bool = false
-    @State private var isAdding: Bool = false
-    let healthStore = HKHealthStore()
     
-    func requestHealthKitPermission(){
-        guard HKHealthStore.isHealthDataAvailable() else { return }
-        guard let waterType = HKQuantityType.quantityType(forIdentifier: .dietaryWater) else { return }
-
-        healthStore.requestAuthorization(toShare: [waterType], read: []) { success, error in
-            if let error = error {
-                print("HealthKit auth error: \(error)")
-            }
+    private func saveWater(amount: Int) {
+        Task {
+            try? await HealthKitManager.shared.saveWater(
+                amountML: Double(amount),
+                date: Date()
+            )
         }
     }
     
-    func saveWaterToHealthKit(amount: Int) {
-        guard let waterType = HKQuantityType.quantityType(forIdentifier: .dietaryWater) else { return }
-        let quantity = HKQuantity(unit: HKUnit.literUnit(with: .milli), doubleValue: Double(amount))
 
-        let sample = HKQuantitySample(
-            type: waterType,
-            quantity: quantity,
-            start: Date(),
-            end: Date()
-        )
-
-        healthStore.save(sample) { success, error in
-            if let error = error {
-                print("HealthKit save error: \(error)")
-            }
-        }
-    }
+        
     // MARK: - Subviews to reduce type-checking complexity
     
     private func HeaderView(bottle: Bottle) -> some View {
@@ -174,21 +155,13 @@ struct ContentView: View {
     //+ml Button
     private func AddButton(bottle: Bottle) -> some View {
         Button(action: {
-            if isAdding { return }
-            isAdding = true
-
             let impact = UIImpactFeedbackGenerator(style: .medium)
             impact.impactOccurred()
             let newRecord = DrinkRecord(date: Date(), amount: bottle.size)
             records.append(newRecord)
             lastDeletedRecord = nil
-            saveWaterToHealthKit(amount: bottle.size)//ヘルスケアへの書き込み
+            saveWater(amount: bottle.size)//ヘルスケアへの書き込み
             NotificationManager.shared.cancelInactivityReminders()
-
-            // 短いクールダウンで連打を防止
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                isAdding = false
-            }
         }) {
             let addLabel: String = {
                 if settings.unitSystem == .ml {
@@ -207,7 +180,7 @@ struct ContentView: View {
                 .foregroundColor(.white)
                 .cornerRadius(10)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.automatic)
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         .overlay(
@@ -215,7 +188,6 @@ struct ContentView: View {
                 .stroke(Color.white.opacity(0.35), lineWidth: 1)
         )
         .shadow(color: .black.opacity(0.2), radius: 10, y: 6)
-        .disabled(isAdding)
         .highPriorityGesture(
             LongPressGesture(minimumDuration: 0.5)
                 .onEnded { _ in
@@ -237,30 +209,25 @@ struct ContentView: View {
                 customAddInput = ""
             }
             Button("追加") {
-                if isAdding { return }
                 switch settings.unitSystem {
                 case .ml:
                     if let value = Int(customAddInput), value > 0 {
-                        isAdding = true
                         let impact = UIImpactFeedbackGenerator(style: .medium)
                         impact.impactOccurred()
                         let record = DrinkRecord(date: Date(), amount: value)
                         records.append(record)
-                        saveWaterToHealthKit(amount: value)
+                        saveWater(amount: value)
                         NotificationManager.shared.cancelInactivityReminders()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { isAdding = false }
                     }
                 case .oz:
                     if let oz = Double(customAddInput), oz > 0 {
-                        isAdding = true
                         let impact = UIImpactFeedbackGenerator(style: .medium)
                         impact.impactOccurred()
                         let ml = settings.ozToMl(oz)
                         let record = DrinkRecord(date: Date(), amount: ml)
                         records.append(record)
-                        saveWaterToHealthKit(amount: ml)
+                        saveWater(amount: ml)
                         NotificationManager.shared.cancelInactivityReminders()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { isAdding = false }
                     }
                 }
                 customAddInput = ""
@@ -533,7 +500,7 @@ struct ContentView: View {
         }
         .fullScreenCover(isPresented: $showTutorial) {
             TutorialView {
-                requestHealthKitPermission()
+                HealthKitManager.shared.requestAuthorization { _ in }
                 showTutorial = false
             }
         }
@@ -551,6 +518,11 @@ struct ContentView: View {
             loadData()
             NotificationManager.shared.cancelInactivityReminders()
         }
+        .onReceive(NotificationCenter.default.publisher(for: .drinkRecordsDidChange)
+            .receive(on: DispatchQueue.main)) { _ in
+            loadData()
+        }
+
         .onChange(of: scenePhase) { _, newPhase in
             switch newPhase {
             case .background:
@@ -563,15 +535,15 @@ struct ContentView: View {
                 break
             }
         }
-        .onChange(of: bottles) { newValue in
+        .onChange(of: bottles) { _, newValue in
             if !newValue.isEmpty {
                 checkFirstTutorial()
             }
         }
-        .onChange(of: bottles) { _ in
+        .onChange(of: bottles) {
             saveData()
         }
-        .onChange(of: records) { _ in
+        .onChange(of: records) {
             saveData()
         }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("didResetAllData"))) { _ in
